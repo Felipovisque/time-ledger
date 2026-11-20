@@ -1,24 +1,91 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="pt-BR">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover, maximum-scale=1">
-  <title>Livro-razão do tempo</title>
-
-  <!-- PWA -->
-  <link rel="manifest" href="./manifest.json">
-  <meta name="theme-color" content="#14161A">
-
-  <!-- Suporte a "Adicionar à Tela de Início" no iOS/Safari -->
-  <meta name="apple-mobile-web-app-capable" content="yes">
-  <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
-  <meta name="apple-mobile-web-app-title" content="Time Ledger">
-  <link rel="apple-touch-icon" href="./icon-192.png">
-
-  <link rel="stylesheet" href="./style.css">
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+  <meta name="theme-color" content="#0f172a">
+  <title>Treino Diário</title>
+  <link rel="manifest" href="manifest.json">
+  <link rel="icon" href="icon.svg" type="image/svg+xml">
+  <link rel="apple-touch-icon" href="icon.svg">
+  <link rel="stylesheet" href="style.css">
 </head>
 <body>
-  <div id="root"></div>
-  <script src="./app.js"></script>
+  <main>
+    <header>
+      <h1>Treino Diário</h1>
+      <p id="today-label" class="muted"></p>
+    </header>
+
+    <section class="card ring-card">
+      <svg class="ring" viewBox="0 0 120 120" aria-hidden="true">
+        <circle class="ring-bg" cx="60" cy="60" r="52"/>
+        <circle id="ring-fg" class="ring-fg" cx="60" cy="60" r="52"/>
+      </svg>
+      <div class="ring-text">
+        <strong id="done-text">0:00</strong>
+        <span class="muted">de <span id="goal-text">1:30</span></span>
+        <span id="left-text" class="pill"></span>
+      </div>
+    </section>
+
+    <section class="card">
+      <div class="timer-row">
+        <div>
+          <div class="muted small">Cronômetro</div>
+          <div id="timer" class="timer">00:00:00</div>
+        </div>
+        <select id="activity" aria-label="Atividade">
+          <option>Musculação</option>
+          <option>Corrida</option>
+          <option>Caminhada</option>
+          <option>Bicicleta</option>
+          <option>Natação</option>
+          <option>Funcional</option>
+          <option>Alongamento</option>
+          <option>Outro</option>
+        </select>
+      </div>
+      <div class="btn-row">
+        <button id="start-btn" class="primary">Iniciar</button>
+        <button id="stop-btn" class="danger" disabled>Finalizar</button>
+      </div>
+    </section>
+
+    <section class="card">
+      <h2>Adicionar manualmente</h2>
+      <form id="manual-form" class="manual">
+        <select id="manual-activity" aria-label="Atividade"></select>
+        <input id="manual-min" type="number" min="1" max="600" placeholder="min" required aria-label="Minutos">
+        <button type="submit">Adicionar</button>
+      </form>
+    </section>
+
+    <section class="card">
+      <h2>Hoje</h2>
+      <ul id="today-list" class="list"></ul>
+    </section>
+
+    <section class="card">
+      <div class="streak-row">
+        <h2>Últimos 7 dias</h2>
+        <span class="pill" id="streak">🔥 0 dias</span>
+      </div>
+      <div id="week" class="week"></div>
+    </section>
+
+    <section class="card">
+      <h2>Configurações</h2>
+      <label class="setting">Meta diária (minutos)
+        <input id="goal-input" type="number" min="10" max="600" step="5">
+      </label>
+      <label class="setting">Lembrete se a meta não foi batida até
+        <input id="reminder-input" type="time">
+      </label>
+      <button id="notif-btn" class="ghost">Ativar notificações</button>
+    </section>
+  </main>
+
+  <script src="app.js"></script>
 </body>
 </html>
